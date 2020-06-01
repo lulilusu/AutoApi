@@ -72,7 +72,7 @@ public class ExcelData {
      */
     public String getPath() throws IOException {
         File directory = new File(".");
-        sourceFile = directory.getCanonicalPath() + "\\src\\main\\resources\\testCase\\"
+        sourceFile = directory.getCanonicalPath() + "./src/main/resources/testCase/"
                 + fileName + ".xls";
         System.out.println(sourceFile);
         return sourceFile;
