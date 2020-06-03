@@ -16,7 +16,7 @@ public class JDBCUtil {
     static {
         try {
             Properties prop = new Properties();
-            String path = ".\\src\\main\\resources\\db.properties";
+            String path = "./src/main/resources/db.properties";
 
             FileInputStream in = new FileInputStream(new File(path));
             prop.load(in);
