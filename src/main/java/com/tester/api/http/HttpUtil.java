@@ -2,7 +2,7 @@ package com.tester.api.http;
 
 import com.alibaba.fastjson.JSON;
 import com.tester.api.beans.ResponseBean;
-import com.tester.api.test.TestCase;
+import com.tester.api.test.ExecuteTest;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -34,7 +34,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.*;
 
-public class HttpUtil extends TestCase {
+public class HttpUtil extends ExecuteTest {
 
     public static final int DEFAULT_CONNECT_TIMEOUT = 6000;
     public static final int DEFAULT_READ_TIMEOUT = 6000;
@@ -99,7 +99,7 @@ public class HttpUtil extends TestCase {
             if (httpResponse.getEntity() != null) {
                 response = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
             }
-            return new ResponseBean(response, httpResponse.getStatusLine().getStatusCode());
+            return new ResponseBean(response, httpResponse.getStatusLine().getStatusCode(), httpResponse.getAllHeaders());
         }
 //        httpClient.close();
 ////        httpResponse.close();
@@ -165,14 +165,14 @@ public class HttpUtil extends TestCase {
 
     public void setParams(HashMap<String, String> params, String formData, HttpEntityEnclosingRequestBase httpMethod) throws UnsupportedEncodingException {
         if (MapUtils.isNotEmpty(params)) {
-            if ( "N".equalsIgnoreCase(formData.trim())) {
+            if ("N".equalsIgnoreCase(formData.trim())) {
                 List<NameValuePair> paramsList = new ArrayList<>();
                 Set<String> keySet = params.keySet();
                 for (String key : keySet) {
                     paramsList.add(new BasicNameValuePair(key, params.get(key)));
                 }
                 httpMethod.setEntity(new UrlEncodedFormEntity(paramsList, Charset.forName("utf-8")));
-            } else if ("Y".equals(formData.trim())){
+            } else if ("Y".equals(formData.trim())) {
                 httpMethod.setHeader("Content-Type", "application/json;charset=UTF-8");
                 String jsonString = JSON.toJSONString(params);
                 httpMethod.setEntity(new StringEntity(jsonString));
@@ -181,7 +181,7 @@ public class HttpUtil extends TestCase {
     }
 
     public void setToken(String token, HttpRequestBase method) {
-        if (token != null || !"".equals(token.trim())) {
+        if (token != null) {
             if (token.equals("access_token")) {
                 method.setHeader("access_token", access_token);
             } else if (token.equals("user_token")) {

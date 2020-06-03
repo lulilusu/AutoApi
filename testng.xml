@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="接口自动化">
-    <test name="接口测试">
-        <classes>
-            <class name="com.tester.api.test.TestCase"/>
-        </classes>
-    </test>
-
     <listeners>
         <listener class-name="com.tester.api.listeners.FailedRetryListener"></listener>
     </listeners>
+
+    <test name="接口测试">
+        <classes>
+            <class name="com.tester.api.test.ExecuteTest"/>
+        </classes>
+    </test>
 </suite>
 

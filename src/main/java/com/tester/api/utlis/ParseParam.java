@@ -1,21 +1,27 @@
-package com.tester.api.test;
+package com.tester.api.utlis;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.HashMap;
 
-public class ParseData {
+public class ParseParam {
 
 
-    /**
-     * 用例参数转为Map
-     * @param params
-     * @return
-     */
-    public static HashMap<String, String> getMap(String params) {
+    public static HashMap<String, String> getExcelMap(String params) {
         HashMap<String, String> map = new HashMap<>();
         String[] buf = params.split("\n");
+        for (String line : buf) {
+            if (line.contains("=")) {
+                map.put(line.split("=")[0], line.split("=")[1]);
+            }
+        }
+        return map;
+    }
+
+    public static HashMap<String, String> getDBMap(String params) {
+        HashMap<String, String> map = new HashMap<>();
+        String[] buf = params.split(",");
         for (String line : buf) {
             if (line.contains("=")) {
                 map.put(line.split("=")[0], line.split("=")[1]);
