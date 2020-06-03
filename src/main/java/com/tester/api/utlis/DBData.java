@@ -21,7 +21,7 @@ public class DBData {
                     rs.getString("desc"),
                     rs.getString("url"),
                     rs.getString("token"),
-                    rs.getString("formData"),
+                    rs.getString("parameterType"),
                     rs.getString("method"),
                     rs.getString("params"),
                     rs.getString("expected"),

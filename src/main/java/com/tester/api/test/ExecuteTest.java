@@ -42,7 +42,7 @@ public class ExecuteTest {
         // 请求参数转为map
         HashMap<String, String> params = ParseParam.getDBMap(cb.getParams());
         // 发送请求
-        ResponseBean response = new HttpUtil().getResponse(cb.getUrl(), cb.getMethod(), params, cb.getToken(), cb.getFormData());
+        ResponseBean response = new HttpUtil().getResponse(cb.getUrl(), cb.getMethod(), params, cb.getToken(), cb.getParameterType());
         // 保存token
         JSONObject obj = JSONObject.parseObject(response.getResponse());
         saveToken(obj);

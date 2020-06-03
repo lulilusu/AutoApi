@@ -6,7 +6,7 @@ public class CaseBean {
     private String desc;
     private String url;
     private String token;
-    private String formData;
+    private String parameterType;
     private String method;
     private String params;
     private String expected;
@@ -17,12 +17,12 @@ public class CaseBean {
 
     }
 
-    public CaseBean(int id, String desc, String url, String token, String formData, String method, String params, String expected, Boolean isRun) {
+    public CaseBean(int id, String desc, String url, String token, String parameterType, String method, String params, String expected, Boolean isRun) {
         this.id = id;
         this.desc = desc;
         this.url = url;
         this.token = token;
-        this.formData = formData;
+        this.parameterType = parameterType;
         this.method = method;
         this.params = params;
         this.expected = expected;
@@ -61,12 +61,12 @@ public class CaseBean {
         this.token = token;
     }
 
-    public String getFormData() {
-        return formData;
+    public String getParameterType() {
+        return parameterType;
     }
 
-    public void setFormData(String formData) {
-        this.formData = formData;
+    public void setParameterType(String parameterType) {
+        this.parameterType = parameterType;
     }
 
     public String getMethod() {
@@ -108,7 +108,7 @@ public class CaseBean {
                 ", desc='" + desc + '\'' +
                 ", url='" + url + '\'' +
                 ", token='" + token + '\'' +
-                ", formData='" + formData + '\'' +
+                ", formData='" + parameterType + '\'' +
                 ", method='" + method + '\'' +
                 ", params='" + params + '\'' +
                 ", expected='" + expected + '\'' +

@@ -90,9 +90,9 @@ public class HttpUtil extends ExecuteTest {
 //        httpsClient = httpBuilder.build();
     }
 
-    public ResponseBean getResponse(String url, String method, HashMap<String, String> params, String token, String formData) throws IOException, URISyntaxException {
+    public ResponseBean getResponse(String url, String method, HashMap<String, String> params, String token, String parameterType) throws IOException, URISyntaxException {
         httpClient = HttpClients.createDefault();
-        HttpUriRequest request = sendRequst(url, method, params, token, formData);
+        HttpUriRequest request = sendRequst(url, method, params, token, parameterType);
         CloseableHttpResponse httpResponse = httpClient.execute(request);
         if (httpResponse != null && httpResponse.getStatusLine() != null) {
             String response = "";
@@ -106,23 +106,23 @@ public class HttpUtil extends ExecuteTest {
         return new ResponseBean(HttpStatus.SC_INTERNAL_SERVER_ERROR);
     }
 
-    public HttpUriRequest sendRequst(String url, String method, HashMap<String, String> params, String token, String formData) throws URISyntaxException, UnsupportedEncodingException {
+    public HttpUriRequest sendRequst(String url, String method, HashMap<String, String> params, String token, String parameterType) throws URISyntaxException, UnsupportedEncodingException {
         HttpUriRequest httpUriRequest = null;
         if ("GET".equalsIgnoreCase(method)) {
-            httpUriRequest = doGet(url, params, token, formData);
+            httpUriRequest = doGet(url, params, token, parameterType);
         } else if ("POST".equalsIgnoreCase(method)) {
-            httpUriRequest = doPost(url, params, token, formData);
+            httpUriRequest = doPost(url, params, token, parameterType);
         } else if ("PUT".equalsIgnoreCase(method)) {
-            httpUriRequest = doPut(url, params, token, formData);
+            httpUriRequest = doPut(url, params, token, parameterType);
         } else if ("DELETE".equalsIgnoreCase(method)) {
-            httpUriRequest = doDelete(url, params, token, formData);
+            httpUriRequest = doDelete(url, params, token, parameterType);
         } else {
             System.out.println("未定义该请求方法：" + method);
         }
         return httpUriRequest;
     }
 
-    public HttpUriRequest doGet(String url, HashMap<String, String> params, String token, String formData) throws URISyntaxException {
+    public HttpUriRequest doGet(String url, HashMap<String, String> params, String token, String parameterType) throws URISyntaxException {
         URIBuilder uriBuilder = new URIBuilder(url);
         if (params != null) {
             Set<Map.Entry<String, String>> entrySet = params.entrySet();
@@ -133,46 +133,46 @@ public class HttpUtil extends ExecuteTest {
         HttpGet get = new HttpGet(uriBuilder.build());
         get.setConfig(requestConfig);
         setToken(token, get);
-        if ("Y".equals(formData.trim())) {
+        if ("Y".equals(parameterType.trim())) {
             get.setHeader("Content-Type", "application/json");
         }
         return get;
     }
 
-    public HttpUriRequest doPost(String url, HashMap<String, String> params, String token, String formData) throws UnsupportedEncodingException {
+    public HttpUriRequest doPost(String url, HashMap<String, String> params, String token, String parameterType) throws UnsupportedEncodingException {
         HttpPost post = new HttpPost(url);
         post.setConfig(requestConfig);
         setToken(token, post);
-        setParams(params, formData, post);
+        setParams(params, parameterType, post);
         return post;
     }
 
-    public HttpUriRequest doPut(String url, HashMap<String, String> params, String token, String formData) throws UnsupportedEncodingException {
+    public HttpUriRequest doPut(String url, HashMap<String, String> params, String token, String parameterType) throws UnsupportedEncodingException {
         HttpPut put = new HttpPut(url);
         put.setConfig(requestConfig);
         setToken(token, put);
-        setParams(params, formData, put);
+        setParams(params, parameterType, put);
         return put;
     }
 
-    public HttpUriRequest doDelete(String url, HashMap<String, String> params, String token, String formData) throws UnsupportedEncodingException {
+    public HttpUriRequest doDelete(String url, HashMap<String, String> params, String token, String parameterType) throws UnsupportedEncodingException {
         HttpDeleteWithBody delete = new HttpDeleteWithBody(url);
         delete.setConfig(requestConfig);
         setToken(token, delete);
-        setParams(params, formData, delete);
+        setParams(params, parameterType, delete);
         return delete;
     }
 
-    public void setParams(HashMap<String, String> params, String formData, HttpEntityEnclosingRequestBase httpMethod) throws UnsupportedEncodingException {
+    public void setParams(HashMap<String, String> params, String parameterType, HttpEntityEnclosingRequestBase httpMethod) throws UnsupportedEncodingException {
         if (MapUtils.isNotEmpty(params)) {
-            if ("N".equalsIgnoreCase(formData.trim())) {
+            if ("N".equalsIgnoreCase(parameterType.trim())) {
                 List<NameValuePair> paramsList = new ArrayList<>();
                 Set<String> keySet = params.keySet();
                 for (String key : keySet) {
                     paramsList.add(new BasicNameValuePair(key, params.get(key)));
                 }
                 httpMethod.setEntity(new UrlEncodedFormEntity(paramsList, Charset.forName("utf-8")));
-            } else if ("Y".equals(formData.trim())) {
+            } else if ("Y".equals(parameterType.trim())) {
                 httpMethod.setHeader("Content-Type", "application/json;charset=UTF-8");
                 String jsonString = JSON.toJSONString(params);
                 httpMethod.setEntity(new StringEntity(jsonString));
