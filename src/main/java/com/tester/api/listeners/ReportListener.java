@@ -43,4 +43,9 @@ public class ReportListener {
     public static StringBuffer assertResult(StringBuffer assertResult) {
         return assertResult;
     }
+
+    @Attachment
+    public static StringBuffer dbAssert(StringBuffer dbAssert){
+        return dbAssert;
+    }
 }

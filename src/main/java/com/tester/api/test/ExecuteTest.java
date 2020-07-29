@@ -6,12 +6,15 @@ import com.tester.api.beans.CaseBean;
 import com.tester.api.beans.ResponseBean;
 import com.tester.api.http.HttpUtil;
 import com.tester.api.listeners.ReportListener;
+import com.tester.api.utlis.DBAssert;
 import com.tester.api.utlis.DataProviders;
 import com.tester.api.utlis.ParseParam;
+import io.qameta.allure.Description;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import static com.tester.api.utlis.Asserts.asserts;
@@ -36,22 +39,32 @@ public class ExecuteTest {
 //
 //    }
 
-
+    @Description("接口自动化")
     @Test(dataProvider = "testData", dataProviderClass = DataProviders.class)
-    public void autoApi(CaseBean cb) throws IOException, URISyntaxException {
-        // 请求参数转为map
-        HashMap<String, String> params = ParseParam.getDBMap(cb.getParams());
-        // 发送请求
-        ResponseBean response = new HttpUtil().getResponse(cb.getUrl(), cb.getMethod(), params, cb.getToken(), cb.getParameterType());
-        // 保存token
-        JSONObject obj = JSONObject.parseObject(response.getResponse());
-        saveToken(obj);
+    public void autoApi(CaseBean cb) {
+        try{
+            HashMap<String, String> params = ParseParam.getDBMap(cb.getParams());
+            // 发送请求
+            ResponseBean response = new HttpUtil().getResponse(cb.getUrl(), cb.getMethod(), params, cb.getToken(), cb.getParameterType());
+            // 保存token
+            JSONObject obj = JSONObject.parseObject(response.getResponse());
+            saveToken(obj);
 
-        // 测试报告
-        ReportListener.create(cb.getDesc(),cb.getMethod(),cb.getUrl(),params,response.getStatusCode(),response.getResponse(),response.getAllHeaders());
-        // 断言
-        asserts(response.getResponse(),cb.getExpected(),response.getStatusCode());
-        System.out.println(response.getResponse());
+            // 测试报告
+            ReportListener.create(cb.getDesc(),cb.getMethod(),cb.getUrl(),params,response.getStatusCode(),response.getResponse(),response.getAllHeaders());
+            // 断言
+            asserts(response.getResponse(),cb.getExpected(),response.getStatusCode());
+            // 数据库校验
+            DBAssert.verify("",obj);
+            System.out.println(response.getResponse());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void saveToken(JSONObject obj){

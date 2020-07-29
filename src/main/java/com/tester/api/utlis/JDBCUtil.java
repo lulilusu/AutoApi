@@ -51,6 +51,7 @@ public class JDBCUtil {
         return connection;
     }
 
+
     public static void close(Connection con, Statement stat, ResultSet rs){
         if(con!=null){
             try{

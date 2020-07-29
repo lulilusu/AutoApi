@@ -10,6 +10,7 @@ public class CaseBean {
     private String method;
     private String params;
     private String expected;
+    private String sql;
     private Boolean isRun;
 
 
@@ -17,7 +18,7 @@ public class CaseBean {
 
     }
 
-    public CaseBean(int id, String desc, String url, String token, String parameterType, String method, String params, String expected, Boolean isRun) {
+    public CaseBean(int id, String desc, String url, String token, String parameterType, String method, String params, String expected, String sql, Boolean isRun) {
         this.id = id;
         this.desc = desc;
         this.url = url;
@@ -26,6 +27,7 @@ public class CaseBean {
         this.method = method;
         this.params = params;
         this.expected = expected;
+        this.sql = sql;
         this.isRun = isRun;
     }
 
@@ -93,6 +95,10 @@ public class CaseBean {
         this.expected = expected;
     }
 
+    public String getSql(){
+       return this.sql;
+    }
+
     public Boolean isRun() {
         return isRun;
     }
@@ -112,6 +118,7 @@ public class CaseBean {
                 ", method='" + method + '\'' +
                 ", params='" + params + '\'' +
                 ", expected='" + expected + '\'' +
+                ", sql='" + sql + '\'' +
                 ", isRun=" + isRun +
                 '}';
     }
