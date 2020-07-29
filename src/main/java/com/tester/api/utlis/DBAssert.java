@@ -46,11 +46,11 @@ public class DBAssert {
                    String jkey= jsonkey.toUpperCase(); // 将接口响应字段变为全小写
                    if (dbKey.equals(jkey)) {    //   当数据库字段与响应字段相等时进行 值判断
                        if (map.get(dbKey).equals(json.get(dbKey)) && map.get(dbKey) == json.get(dbKey)) {    // ==条件 会不明原因失败
-                           str1= "【数据库：" + map.get(dbKey) + "," + "响应"+ json.get(dbKey) + "】pass! \n";
+                           str1= jsonkey +"【数据库：" + map.get(dbKey) + "," + "响应"+ json.get(dbKey) + "】pass! \n";
                            System.out.println("【数据库：" + map.get(dbKey) + "响应：" + json.get(dbKey) + "】pass");
                            flag = true;
                        } else {
-                           str2= "【数据库：" + map.get(dbKey) + "," + "响应"+ json.get(dbKey) + "】fail! \n";
+                           str2= jsonkey +"【数据库：" + map.get(dbKey) + "," + "响应"+ json.get(dbKey) + "】fail! \n";
                            System.out.println("【数据库：" + map.get(dbKey) + "响应：" + json.get(dbKey) + "】fail");
                            flag = false;
                        }
