@@ -32,12 +32,4 @@ public class DBData {
         JDBCUtil.close(conn, stat,rs);
         return list;
     }
-
-    public static ResultSet query(String sql) throws SQLException {
-        PreparedStatement stat = conn.prepareStatement(sql);
-        ResultSet rs = stat.executeQuery();
-
-        return rs;
-    }
-
 }

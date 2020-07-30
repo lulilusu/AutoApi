@@ -5,9 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.tester.api.listeners.ReportListener;
 import org.apache.commons.lang3.StringUtils;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 public class DBAssert {
@@ -18,19 +16,21 @@ public class DBAssert {
            Map<String, String> map = new HashMap<>();        // 参数键值
            StringBuffer sb = new StringBuffer();             // 保存断言结果
 
+           Connection conn = JDBCUtil.getConnection();
+           PreparedStatement stat = conn.prepareStatement(sql);
+           ResultSet res = stat.executeQuery();
 
-           ResultSet result = DBData.query(sql);
-           ResultSetMetaData metaData = result.getMetaData();
+           ResultSetMetaData metaData = res.getMetaData();
            Boolean flag = false;
            String key = null;
-           while (result.next()) {
+           while (res.next()) {
                for (int i = 1; i <= metaData.getColumnCount(); i++) {
                    String[] split = metaData.getColumnName(i).split("_");
                    key = StringUtils.join(split);  // 拼接字符
                    mapType.put(key, metaData.getColumnTypeName(i)); // 保存数据库字段名和字段名数据类型
 
                    String columnName = metaData.getColumnName(i);     // 获取原始键
-                   String vaule = result.getString(columnName);      // 通过键获取值
+                   String vaule = res.getString(columnName);      // 通过键获取值
                    map.put(key, vaule);               //   保存sql返回值为map
 
 
@@ -57,10 +57,13 @@ public class DBAssert {
                ReportListener.dbResult(sb);                // 加入测试报告
            }
            Assertion.verifyTrue(flag,"断言失败");
+           JDBCUtil.close(conn,stat,res);
 
        }else {
            System.out.println("该接口没有数据库校验");
        }
+
+
     }
 
     public static void main(String[] args) throws SQLException {
