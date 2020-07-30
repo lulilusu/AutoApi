@@ -45,7 +45,7 @@ public class ReportListener {
     }
 
     @Attachment("数据库校验")
-    public static StringBuffer dbAssert(StringBuffer dbAssert){
-        return dbAssert;
+    public static StringBuffer dbResult(StringBuffer dbResult){
+        return dbResult;
     }
 }
