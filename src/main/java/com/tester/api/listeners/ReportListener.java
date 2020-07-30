@@ -39,12 +39,12 @@ public class ReportListener {
                 + "body: " + "\n" +resp;
     }
 
-    @Attachment("断言结果")
+    @Attachment("响应断言")
     public static StringBuffer assertResult(StringBuffer assertResult) {
         return assertResult;
     }
 
-    @Attachment
+    @Attachment("数据库校验")
     public static StringBuffer dbAssert(StringBuffer dbAssert){
         return dbAssert;
     }

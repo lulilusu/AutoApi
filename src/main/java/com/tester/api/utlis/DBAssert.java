@@ -27,9 +27,9 @@ public class DBAssert {
            while (result.next()) {
                for (int i = 1; i <= metaData.getColumnCount(); i++) {
                    String[] split = metaData.getColumnName(i).split("_");
-                   for (int j = 0; j < split.length; j ++){
-                       String s = split[i-1].substring(1).toUpperCase();
-                   }
+//                   for (int j = 0; j < split.length; j ++){
+//                       String s = split[i-1].substring(1).toUpperCase();
+//                   }
                    key = StringUtils.join(split);
                    System.out.println(key);
                    mapType.put(key, metaData.getColumnTypeName(i)); // 保存数据库字段名和字段名数据类型
@@ -59,8 +59,7 @@ public class DBAssert {
                sb.append(str1).append("\n").append(str2);  // 保存结果
                ReportListener.dbAssert(sb);                // 加入测试报告
            }
-
-           Assert.assertTrue(flag,"断言失败");
+            Assertion.verifyTrue(flag,"断言失败");
 
        }else {
            System.out.println("该接口没有数据库校验");

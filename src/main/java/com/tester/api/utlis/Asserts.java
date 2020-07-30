@@ -29,6 +29,6 @@ public class Asserts {
             }
         }
         ReportListener.assertResult(assertResult);
-        Assert.assertTrue(assertFlag, "断言失败查看详情");
+        Assertion.verifyTrue(assertFlag,"断言失败");
     }
 }

@@ -2,7 +2,7 @@ package com.tester.api.http;
 
 import com.alibaba.fastjson.JSON;
 import com.tester.api.beans.ResponseBean;
-import com.tester.api.test.ExecuteTest;
+import com.tester.api.test.TestApi;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -34,7 +34,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.*;
 
-public class HttpUtil extends ExecuteTest {
+public class HttpUtil extends TestApi {
 
     public static final int DEFAULT_CONNECT_TIMEOUT = 6000;
     public static final int DEFAULT_READ_TIMEOUT = 6000;

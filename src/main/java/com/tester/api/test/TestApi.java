@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 import static com.tester.api.utlis.Asserts.asserts;
 
-public class ExecuteTest {
+public class TestApi {
 
     public static String access_token;
     public static String user_token;
