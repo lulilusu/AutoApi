@@ -4,7 +4,6 @@ package com.tester.api.utlis;
 import com.alibaba.fastjson.JSONObject;
 import com.tester.api.listeners.ReportListener;
 import org.apache.commons.lang3.StringUtils;
-import org.testng.Assert;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -57,8 +56,7 @@ public class DBAssert {
                System.out.println(sb.toString());
                ReportListener.dbResult(sb);                // 加入测试报告
            }
-
-            Assertion.verifyTrue(flag,"断言失败");
+           Assertion.verifyTrue(flag,"断言失败");
 
        }else {
            System.out.println("该接口没有数据库校验");

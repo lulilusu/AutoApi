@@ -1,7 +1,6 @@
 package com.tester.api.utlis;
 
 import com.tester.api.listeners.ReportListener;
-import org.testng.Assert;
 
 
 public class Asserts {

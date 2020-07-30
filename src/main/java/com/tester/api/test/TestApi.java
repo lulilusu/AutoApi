@@ -10,6 +10,7 @@ import com.tester.api.utlis.DBAssert;
 import com.tester.api.utlis.DataProviders;
 import com.tester.api.utlis.ParseParam;
 import io.qameta.allure.Description;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 
 import static com.tester.api.utlis.Asserts.asserts;
 
+@Listeners({com.tester.api.listeners.AssertionListener.class})
 public class TestApi {
 
     public static String access_token;
